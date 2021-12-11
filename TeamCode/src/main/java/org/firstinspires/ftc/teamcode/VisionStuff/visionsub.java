@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.VisionStuff;
 
 import com.SCHSRobotics.HAL9001.system.robot.Camera;
 import com.SCHSRobotics.HAL9001.system.robot.HALPipeline;
