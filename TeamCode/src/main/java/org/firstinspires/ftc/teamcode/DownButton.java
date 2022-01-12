@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class DownButton extends BaseAutonomous {
 
     @MainRobot
-    private MyRobot robot;
+    private Baguette robot;
 
     @Override
     public void main() {

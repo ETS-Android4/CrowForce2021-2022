@@ -7,6 +7,7 @@ import com.SCHSRobotics.HAL9001.system.robot.roadrunner_util.HALTrajectory;
 import com.SCHSRobotics.HAL9001.util.math.geometry.Point2D;
 import com.SCHSRobotics.HAL9001.util.math.geometry.Vector2D;
 import com.SCHSRobotics.HAL9001.util.math.units.HALAngleUnit;
+import com.SCHSRobotics.HAL9001.util.math.units.HALDistanceUnit;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,7 +17,7 @@ import static java.lang.Math.PI;
 @Autonomous(name = "im cool", group = "cool group")
 public class imCoolAutonomous extends BaseAutonomous {
     public @MainRobot
-     MyRobot robot;
+     Baguette robot;
 
     private void drivePower (double pow, int angleDegrees) {
         //write code that uses the imu to see how far it goes, and add that to the parameters so its based off distance
@@ -30,19 +31,18 @@ public class imCoolAutonomous extends BaseAutonomous {
     @Override
     public void main() {
         robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
-        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0), 0).
+        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
 
                 lineTo(new Point2D(0,48)).
-                build().
-                toRoadrunner(),
+                build().toRoadrunner(),
                 CoordinateMode.HAL);
 
-        HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
+        /*HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
                 lineTo(new Point2D(0,0)).
                 build().
                 toRoadrunner(),
                 CoordinateMode.HAL);
-
+*/
         //robot.mDrive.followTrajectory(forwardRoute);
         //waitTime(1000);
         //robot.mDrive.turnPID(PI);
@@ -53,17 +53,17 @@ public class imCoolAutonomous extends BaseAutonomous {
         //waitTime(1000);
         //robot.mDrive.followTrajectory(returnRoute);
 
-        HALTrajectory rightMarker = new HALTrajectory(robot.mDrive.trajectoryBuilder(returnRoute.end(), 0).
+        /*HALTrajectory rightMarker = new HALTrajectory(robot.mDrive.trajectoryBuilder(returnRoute.end(), 0).
 
                 lineTo(new Point2D(-30,48)).
                 build().
                 toRoadrunner(),
-                CoordinateMode.HAL);
+                CoordinateMode.HAL);*/
 
-        robot.mDrive.followTrajectory(forwardRoute);
-        robot.mDrive.followTrajectory(returnRoute);
+        //robot.mDrive.followTrajectory(forwardRoute);
+        //robot.mDrive.followTrajectory(returnRoute);
         //robot.mDrive.followTrajectory(rightMarker);
-
+        robot.mDrive.moveSimple(new Vector2D(0, 1219), 0.4);
 
     }
 }

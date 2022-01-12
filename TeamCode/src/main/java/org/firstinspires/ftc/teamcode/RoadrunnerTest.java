@@ -6,7 +6,7 @@ import com.SCHSRobotics.HAL9001.system.robot.MainRobot;
 class RoadrunnerTest extends BaseAutonomous {
     
     @MainRobot
-    public MyRobot robot;
+    public Baguette robot;
     
     public void main() {
         

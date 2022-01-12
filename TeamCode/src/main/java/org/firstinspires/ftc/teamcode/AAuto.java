@@ -17,7 +17,7 @@ import com.SCHSRobotics.HAL9001.system.robot.BaseAutonomous;
         //@Autonomous(name = "MyHalAuto", group = "Example Programs")
 public class AAuto extends BaseAutonomous {
     public @MainRobot
-    MyRobot robot;
+    Baguette robot;
 
     @Override
     public void main() {

@@ -13,10 +13,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import static java.lang.Math.PI;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Subsystem.WeirdSpinnerHalWorkaround;
 
 @Autonomous(name = "PIDTest", group = "Example Programs")
 public class PIDTestAutonomous extends BaseAutonomous {
-    public @MainRobot MyRobot robot;
+    public @MainRobot Baguette robot;
+    WeirdSpinnerHalWorkaround weird = new WeirdSpinnerHalWorkaround();
 
 
     @Override
@@ -39,6 +41,8 @@ public class PIDTestAutonomous extends BaseAutonomous {
                 toRoadrunner(),
                 CoordinateMode.HAL);*/
 
+
+        weird.main();
 
 
         //robot.mDrive.moveSimple(new Vector2D(0,48), 1);

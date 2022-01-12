@@ -11,25 +11,26 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.*;
-import org.firstinspires.ftc.teamcode.MyRobot;
+import org.firstinspires.ftc.teamcode.Baguette;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
 //@TeleOp(name = "Arm Controls", group = "robot")
 public class ArmController extends SubSystem {
 
     public @MainRobot
-    MyRobot robot;
+    Baguette robot;
 
     Servo elbowJoint;
     Servo clampServo;
 
 
-    public ArmController(MyRobot robot, String BIG_S, String CLAMP_S){
+    public ArmController(Baguette robot, String BIG_S, String CLAMP_S){
         super(robot);
-        elbowJoint = hardwareMap.servo.get(BIG_S);
-        clampServo = hardwareMap.servo.get(CLAMP_S);
+        elbowJoint = robot.hardwareMap.servo.get(BIG_S);
+        clampServo = robot.hardwareMap.servo.get(CLAMP_S);
     }
 
 
@@ -51,18 +52,18 @@ public class ArmController extends SubSystem {
 
     @Override
     public void handle() {
-        double py = -gamepad1.left_stick_y;
-        boolean down = gamepad1.dpad_down;
-        boolean up = gamepad1.dpad_up;
-        boolean grab = gamepad1.right_bumper;
-        boolean letGo = gamepad1.left_bumper;
-        boolean thirdLevel = gamepad1.triangle;
-        boolean secondLevel = gamepad1.square;
-        boolean firstLevel = gamepad1.x;
+        double py = -opMode.gamepad1.left_stick_y;
+        boolean down = opMode.gamepad1.dpad_down;
+        boolean up = opMode.gamepad1.dpad_up;
+        boolean grab = opMode.gamepad1.right_bumper;
+        boolean letGo = opMode.gamepad1.left_bumper;
+        boolean thirdLevel = opMode.gamepad1.triangle;
+        boolean secondLevel = opMode.gamepad1.square;
+        boolean firstLevel = opMode.gamepad1.x;
 
         armPos = elbowJoint.getPosition();
 
-        while(py > 0.5)
+        /*while(py > 0.5)
         {
             elbowJoint.setPosition(armPos + 1);
             armPos += 1;
@@ -71,7 +72,7 @@ public class ArmController extends SubSystem {
         {
             elbowJoint.setPosition(armPos - 1);
             armPos -= 1;
-        }
+        }*/
 
         if(down == true)
         {
