@@ -12,6 +12,8 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import Util.Converter;
+
 import static java.lang.Math.PI;
 
 @Autonomous(name = "im cool", group = "cool group")
@@ -63,7 +65,7 @@ public class imCoolAutonomous extends BaseAutonomous {
         //robot.mDrive.followTrajectory(forwardRoute);
         //robot.mDrive.followTrajectory(returnRoute);
         //robot.mDrive.followTrajectory(rightMarker);
-        robot.mDrive.moveSimple(new Vector2D(0, 1219), 0.4);
+        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(48)), 0.4);
 
     }
 }
