@@ -75,7 +75,7 @@ public class Baguette extends Robot {
         mDrive.reverseMotor("b_l_m");
         mDrive.reverseMotor("b_r_m");
 
-        mDrive.setTurnPID(new PIDCoefficients(0.7, 0, 0.0275));
+        mDrive.setTurnPID(new PIDCoefficients(0.7, 0, 0.0225));
         //mDrive.set
         mDrive.setHeadingPIDTolerance(Math.PI/45);
         //mDrive.setHeadingPID(new PIDCoefficients(0.5, 0, 0.05));

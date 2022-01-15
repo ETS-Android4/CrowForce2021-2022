@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.VisionStuff;
 
 import com.SCHSRobotics.HAL9001.system.robot.Camera;
 
+//import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.MatOfPoint;
@@ -24,19 +25,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vision extends SubSystem {
-
+    OpenCvCamera camera;
     public Vision(Robot robot) {
         super(robot);
+        //OpenCVLoader.initDebug();
         int cameraMonitorViewId = robot.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", robot.hardwareMap.appContext.getPackageName());
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(robot.hardwareMap.get(WebcamName.class, "Cam"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(robot.hardwareMap.get(WebcamName.class, "Cam"), cameraMonitorViewId);
         camera.setPipeline(new TestPipeline());
 
-        camera.openCameraDeviceAsync(() -> camera.startStreaming((int)1080, (int)720));
+
     }
 
     @Override
     public void init() {
-
+        camera.openCameraDeviceAsync(() -> camera.startStreaming((int)1080, (int)720));
     }
 
     @Override

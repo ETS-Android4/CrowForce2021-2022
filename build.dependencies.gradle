@@ -21,6 +21,8 @@ dependencies {
     implementation 'org.firstinspires.ftc:gameAssets-FreightFrenzy:1.0.0'
 
     implementation('io.github.schs-robotics:hal9001:1.1.7') {
+        //exclude group: 'io.github.schs-robotics', module: 'hal9001-opencv-repackaged'
+
         exclude group: 'org.ejml', module: 'ejml-all'
     }
 }
