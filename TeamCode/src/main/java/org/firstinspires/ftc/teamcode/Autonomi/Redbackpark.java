@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "BlueLeftMaxAutoForward", group = "comp")
-public class BlueLeftMaxAutoForward extends BaseAutonomous {
+@Autonomous(name = "RedBackPark", group = "comp")
+public class Redbackpark extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -77,34 +77,14 @@ public class BlueLeftMaxAutoForward extends BaseAutonomous {
 
 
         //scan
-        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(3)), 0.4);
+        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(8)), 0.4);
         waitTime(1000);
-        robot.mDrive.moveSimple(new Vector2D(-Converter.inchToEncoder(19),0), 0.4);
+        robot.mDrive.moveSimple(new Vector2D(Converter.inchToEncoder(19),0), 0.4);
         waitTime(1000);
 
         /*robot.mDrive.turnPower(0.4);
         waitTime(1500);
         robot.mDrive.turnPower(0);
         //robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);*/
-
-        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(1)), 0.4);
-        robot.intake.dropMarker("color");
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(4)), 0.4);
-        robot.mDrive.turnPower(-0.4);
-        waitTime(700);
-        robot.mDrive.turnPower(0);
-
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(8)), 0.4);
-        //robot.mDrive.turnPID(0, HALAngleUnit.DEGREES);
-        robot.mDrive.turnPower(-0.4);
-        waitTime(880);
-        robot.mDrive.turnPower(0);
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(5)), 0.4);
-        robot.mDrive.turnPower(0.4);
-        waitTime(800);
-        robot.mDrive.turnPower(0);
-        robot.mDrive.movePower(0, 0.7);
-        waitTime(2000);
-
     }
 }

@@ -77,14 +77,19 @@ public class Testautonomosu extends BaseAutonomous {
 
 
         //scan
-        robot.mDrive.moveSimple(Converter.inchToEncoder(8), 0, 0.4);
+        robot.mDrive.turnPower(0.4);
+        waitTime(1600);
+        robot.mDrive.turnPower(0);
+
+
+
         telemetry.addData("thingy", robot.mDrive.getLocalizer().getPoseEstimate());
         telemetry.update();
         waitTime(10000);
 
         //robot.intake.dropMarker("color");*/
 
-        robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);
+        //robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);
         telemetry.addData("thingy", robot.mDrive.getLocalizer().getPoseEstimate());
         telemetry.update();
         waitTime(10000);

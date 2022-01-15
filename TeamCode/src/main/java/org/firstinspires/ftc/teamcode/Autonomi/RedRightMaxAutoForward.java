@@ -36,7 +36,11 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
 
     @Override
     public void main() {
-        robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
+        //robot.mDrive.reverseMotor("f_l_m");
+        //robot.mDrive.reverseMotor("f_r_m");
+        //robot.mDrive.reverseMotor("b_l_m");
+        //robot.mDrive.reverseMotor("b_r_m");
+        //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
         HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
 
                 lineTo(new Point2D(0,48)).
@@ -73,20 +77,34 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
 
 
         //scan
-        robot.mDrive.moveSimple(new Vector2D(.5, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
-        robot.mDrive.moveSimple(new Vector2D(1, -90, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(3)), 0.4);
+        waitTime(1000);
+        robot.mDrive.moveSimple(new Vector2D(Converter.inchToEncoder(19),0), 0.4);
+        waitTime(1000);
 
+        /*robot.mDrive.turnPower(0.4);
+        waitTime(1500);
+        robot.mDrive.turnPower(0);
+        //robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);*/
+
+        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(1)), 0.4);
         robot.intake.dropMarker("color");
+        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(4)), 0.4);
+        robot.mDrive.turnPower(0.4);
+        waitTime(700);
+        robot.mDrive.turnPower(0);
 
-        robot.arm.dropArm();
-
-        robot.mDrive.turnPID( 90, HALAngleUnit.DEGREES);
-        robot.mDrive.moveSimple(new Vector2D(6, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
-
-
-
-
-
+        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(8)), 0.4);
+        //robot.mDrive.turnPID(0, HALAngleUnit.DEGREES);
+        robot.mDrive.turnPower(0.4);
+        waitTime(880);
+        robot.mDrive.turnPower(0);
+        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(5)), 0.4);
+        robot.mDrive.turnPower(-0.4);
+        waitTime(800);
+        robot.mDrive.turnPower(0);
+        robot.mDrive.movePower(0, 0.7);
+        waitTime(2000);
 
     }
 }

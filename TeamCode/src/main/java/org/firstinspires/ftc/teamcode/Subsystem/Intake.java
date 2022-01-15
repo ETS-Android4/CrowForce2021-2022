@@ -58,15 +58,18 @@ public class Intake extends SubSystem {
         int temp = 3;
         switch (temp/*color*/) {
             case 1:
-                robot.mDrive.moveSimple(Converter.inchToEncoder(3), 90, 0.4);
+                robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(3)), -0.4);
+                waitTime(1000);
                 robot.intake.setSlides(1);
                 break;
             case 2:
-                robot.mDrive.moveSimple(Converter.inchToEncoder(3), 90, 0.4);
+                robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(3)), -0.4);
+                waitTime(1000);
                 robot.intake.setSlides(2);
                 break;
             case 3:
-                robot.mDrive.moveSimple(Converter.inchToEncoder(3), 90, 0.4);
+                robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(5)), 0.4);
+                waitTime(1000);
                 robot.intake.setSlides(3);
                 break;
         }
@@ -104,12 +107,12 @@ public class Intake extends SubSystem {
                     isSettingSlide = false;
                 case 3:
                     slidesMotor.setPower(pow);
-                    waitTime(1900);
+                    waitTime(2200);
                     slidesMotor.setPower(0);
                     drop();
                     waitTime(400);
                     slidesMotor.setPower(-pow);
-                    waitTime(1800);
+                    waitTime(2000);
                     slidesMotor.setPower(0);
                     isSettingSlide = false;
             }
