@@ -104,7 +104,7 @@ public class Arm2 extends SubSystem {
             elbowJoint.setPosition((elbowState * (.1/4) + 0.59));
         }
         else {
-            elbowJoint.setPosition((elbowState * (0.15/7)) + 0.47);
+            elbowJoint.setPosition((elbowState * (0.15/7)) + 0.375);
 
         }
 
@@ -127,9 +127,9 @@ public class Arm2 extends SubSystem {
     @TeleopConfig
     public static ConfigParam[] teleopConfig() {
         return new ConfigParam[] {
-                new ConfigParam(LOWER_ELBOW_SERVO, Button.BooleanInputs.dpad_left),
-                new ConfigParam(RAISE_ELBOW_SERVO, Button.BooleanInputs.dpad_right),
-                new ConfigParam(CLAMP_SERVO_BUTTON, Button.BooleanInputs.b)
+                new ConfigParam(LOWER_ELBOW_SERVO, Button.BooleanInputs.dpad_left, 2),
+                new ConfigParam(RAISE_ELBOW_SERVO, Button.BooleanInputs.dpad_right, 2),
+                new ConfigParam(CLAMP_SERVO_BUTTON, Button.BooleanInputs.b, 2)
         };
     }
 }

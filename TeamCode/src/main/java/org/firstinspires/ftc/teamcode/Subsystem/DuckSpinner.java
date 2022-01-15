@@ -96,7 +96,7 @@ public class DuckSpinner extends SubSystem {
     @TeleopConfig
     public static ConfigParam[] teleopConfig() {
         return new ConfigParam[] {
-                new ConfigParam(SPIN_MOTOR_BUTTON, Button.BooleanInputs.a)
+                new ConfigParam(SPIN_MOTOR_BUTTON, Button.BooleanInputs.a, 2)
         };
     }
 }

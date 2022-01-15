@@ -191,12 +191,12 @@ public class Intake extends SubSystem {
     @TeleopConfig
     public static ConfigParam[] teleopConfig() {
         return new ConfigParam[] {
-                new ConfigParam(SLIDES_MOTOR_UP_BUTTON, Button.BooleanInputs.dpad_up),
-                new ConfigParam(SLIDES_MOTOR_DOWN_BUTTON, Button.BooleanInputs.dpad_down),
-                new ConfigParam(INTAKE_MOTOR_IN_BUTTON, Button.BooleanInputs.bool_right_trigger),
-                new ConfigParam(INTAKE_MOTOR_OUT_BUTTON, Button.BooleanInputs.bool_left_trigger),
-                new ConfigParam(DROPPER_SERVO_BUTTON , Button.BooleanInputs.x),
-                new ConfigParam(SPEED_BUTTON , Button.BooleanInputs.x)
+                new ConfigParam(SLIDES_MOTOR_UP_BUTTON, Button.BooleanInputs.dpad_up, 2),
+                new ConfigParam(SLIDES_MOTOR_DOWN_BUTTON, Button.BooleanInputs.dpad_down, 2),
+                new ConfigParam(INTAKE_MOTOR_IN_BUTTON, Button.BooleanInputs.bool_right_trigger, 2),
+                new ConfigParam(INTAKE_MOTOR_OUT_BUTTON, Button.BooleanInputs.bool_left_trigger, 2),
+                new ConfigParam(DROPPER_SERVO_BUTTON , Button.BooleanInputs.x, 2),
+                new ConfigParam(SPEED_BUTTON , Button.BooleanInputs.y, 1)
         };
     }
 }
