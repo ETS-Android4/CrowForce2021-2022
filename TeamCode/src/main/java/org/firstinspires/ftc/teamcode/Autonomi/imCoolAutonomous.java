@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomi;
 
+import com.SCHSRobotics.HAL9001.system.config.HALConfig;
 import com.SCHSRobotics.HAL9001.system.robot.BaseAutonomous;
 import com.SCHSRobotics.HAL9001.system.robot.MainRobot;
 import com.SCHSRobotics.HAL9001.system.robot.roadrunner_util.CoordinateMode;
@@ -12,6 +13,9 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.Baguette;
+import org.firstinspires.ftc.teamcode.Subsystem.DuckSpinner;
+
 import Util.Converter;
 
 import static java.lang.Math.PI;
@@ -19,7 +23,7 @@ import static java.lang.Math.PI;
 @Autonomous(name = "im cool", group = "cool group")
 public class imCoolAutonomous extends BaseAutonomous {
     public @MainRobot
-     Baguette robot;
+    Baguette robot;
 
     private void drivePower (double pow, int angleDegrees) {
         //write code that uses the imu to see how far it goes, and add that to the parameters so its based off distance
@@ -65,7 +69,51 @@ public class imCoolAutonomous extends BaseAutonomous {
         //robot.mDrive.followTrajectory(forwardRoute);
         //robot.mDrive.followTrajectory(returnRoute);
         //robot.mDrive.followTrajectory(rightMarker);
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(48)), 0.4);
+
+
+        //scan
+        robot.mDrive.moveSimple(new Vector2D(.5, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+
+        robot.spinner.spinSpinMotorTime();
+
+        robot.mDrive.moveSimple(new Vector2D(-2, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
+
+        robot.arm.dropArm();
+
+        robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+
+
+
+
+        //red side
+
+        robot.mDrive.moveSimple(new Vector2D(.5, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+
+        robot.spinner.spinSpinMotorTime();
+
+        robot.mDrive.moveSimple(new Vector2D(-2, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
+
+        robot.arm.dropArm();
+
+        robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
+        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+
+
 
     }
 }

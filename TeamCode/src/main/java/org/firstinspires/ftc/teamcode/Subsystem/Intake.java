@@ -6,10 +6,17 @@ import com.SCHSRobotics.HAL9001.system.robot.MainRobot;
 import com.SCHSRobotics.HAL9001.system.robot.SubSystem;
 import com.SCHSRobotics.HAL9001.util.control.Button;
 import com.SCHSRobotics.HAL9001.util.control.CustomizableGamepad;
+import com.SCHSRobotics.HAL9001.util.math.geometry.Vector2D;
+import com.SCHSRobotics.HAL9001.util.math.units.HALAngleUnit;
+import com.SCHSRobotics.HAL9001.util.math.units.HALDistanceUnit;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Baguette;
+
+import Util.Converter;
+
 
 public class Intake extends SubSystem {
     public CustomizableGamepad gamepad;
@@ -24,6 +31,8 @@ public class Intake extends SubSystem {
     public static final String INTAKE_MOTOR_IN_BUTTON = "INTAKE_MOTOR_IN_BUTTON";
     public static final String INTAKE_MOTOR_OUT_BUTTON = "INTAKE_MOTOR_OUT_BUTTON";
     public static final String DROPPER_SERVO_BUTTON = "DROPPER_SERVO_BUTTON";
+    public static final String SPEED_BUTTON = "SPEED_BUTTON";
+    public static boolean isSettingSlide = false;
 
     boolean flag = true;
 
@@ -45,9 +54,71 @@ public class Intake extends SubSystem {
         usesConfig = true;
     }
 
+    public void dropMarker(String color) {
+        int temp = 3;
+        switch (temp/*color*/) {
+            case 1:
+                robot.mDrive.moveSimple(Converter.inchToEncoder(3), 90, 0.4);
+                robot.intake.setSlides(1);
+                break;
+            case 2:
+                robot.mDrive.moveSimple(Converter.inchToEncoder(3), 90, 0.4);
+                robot.intake.setSlides(2);
+                break;
+            case 3:
+                robot.mDrive.moveSimple(Converter.inchToEncoder(3), 90, 0.4);
+                robot.intake.setSlides(3);
+                break;
+        }
+    }
+    public void drop() {
+        dropperServo.setPower(-.2);
+        waitTime(750);
+        dropperServo.setPower(-1);
+    }
+
+    public void setSlides(int level) {
+        double pow = -0.6;
+        if (!isSettingSlide) {
+            isSettingSlide = true;
+            switch (level) {
+                case 1:
+                    slidesMotor.setPower(pow);
+                    waitTime(500);
+                    slidesMotor.setPower(0);
+                    drop();
+                    waitTime(400);
+                    slidesMotor.setPower(-pow);
+                    waitTime(400);
+                    slidesMotor.setPower(0);
+                    isSettingSlide = false;
+                case 2:
+                    slidesMotor.setPower(pow);
+                    waitTime(750);
+                    slidesMotor.setPower(0);
+                    drop();
+                    waitTime(400);
+                    slidesMotor.setPower(-pow);
+                    waitTime(650);
+                    slidesMotor.setPower(0);
+                    isSettingSlide = false;
+                case 3:
+                    slidesMotor.setPower(pow);
+                    waitTime(1900);
+                    slidesMotor.setPower(0);
+                    drop();
+                    waitTime(400);
+                    slidesMotor.setPower(-pow);
+                    waitTime(1800);
+                    slidesMotor.setPower(0);
+                    isSettingSlide = false;
+            }
+        }
+    }
+
     @Override
     public void init() {
-
+        dropperServo.setPower(-1);
     }
 
     @Override
@@ -57,7 +128,7 @@ public class Intake extends SubSystem {
 
     @Override
     public void start() {
-        if (usesConfig) {
+        if (usesConfig && !robot.isAutonomous()) {
             gamepad = robot.pullControls(this);
         }
     }
@@ -65,10 +136,10 @@ public class Intake extends SubSystem {
     @Override
     public void handle() {
         if (gamepad.getInput(INTAKE_MOTOR_IN_BUTTON)){
-            intakeMotor.setPower(0.5);
+            intakeMotor.setPower(0.75);
         }
         else if (gamepad.getInput(INTAKE_MOTOR_OUT_BUTTON)){
-            intakeMotor.setPower(-0.5);
+            intakeMotor.setPower(-0.75);
         }
         else {
             intakeMotor.setPower(0);
@@ -85,10 +156,28 @@ public class Intake extends SubSystem {
         }
 
         if (gamepad.getInput(DROPPER_SERVO_BUTTON)) {
-            dropperServo.setPower(-.2);
-            waitTime(750);
-            dropperServo.setPower(-1);
+            drop();
         }
+
+        if (gamepad.getInput(SPEED_BUTTON)) {
+
+            if (flag) {
+                robot.mDrive.setVelocityMultiplier(0.2);
+                robot.telemetry.addData("speed", "on");
+                robot.telemetry.update();
+                robot.mDrive.setTurnSpeedMultiplier(0.2);
+                flag = false;
+            }
+            else {
+                robot.mDrive.setVelocityMultiplier(1);
+                robot.telemetry.addData("speed", "off");
+                robot.telemetry.update();
+                robot.mDrive.setTurnSpeedMultiplier(1);
+                flag = true;
+            }
+        }
+
+
     }
 
     @Override
@@ -103,7 +192,8 @@ public class Intake extends SubSystem {
                 new ConfigParam(SLIDES_MOTOR_DOWN_BUTTON, Button.BooleanInputs.dpad_down),
                 new ConfigParam(INTAKE_MOTOR_IN_BUTTON, Button.BooleanInputs.bool_right_trigger),
                 new ConfigParam(INTAKE_MOTOR_OUT_BUTTON, Button.BooleanInputs.bool_left_trigger),
-                new ConfigParam(DROPPER_SERVO_BUTTON , Button.BooleanInputs.x)
+                new ConfigParam(DROPPER_SERVO_BUTTON , Button.BooleanInputs.x),
+                new ConfigParam(SPEED_BUTTON , Button.BooleanInputs.x)
         };
     }
 }

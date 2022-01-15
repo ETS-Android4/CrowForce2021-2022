@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystem;
 
+import android.app.backup.BackupAgent;
+
 import com.SCHSRobotics.HAL9001.system.config.ConfigData;
 import com.SCHSRobotics.HAL9001.system.config.ConfigParam;
 import com.SCHSRobotics.HAL9001.system.config.TeleopConfig;
@@ -40,7 +42,20 @@ public class DuckSpinner extends SubSystem {
         usesConfig = true;
     }
 
-    public void spinSpinMotor(double _power) { spinMotor.setPower(_power); }
+    public void spinSpinMotorTime(double _power, int time) {
+        spinMotor.setPower(_power);
+        waitTime(time);
+        spinMotor.setPower(0);
+    }
+
+    public void spinSpinMotorTime() {
+        spinMotor.setPower(0.5);
+        waitTime(1000);
+        spinMotor.setPower(0);
+    }
+
+
+
 
     @Override
     public void init() {
@@ -54,7 +69,7 @@ public class DuckSpinner extends SubSystem {
 
     @Override
     public void start() {
-        if (usesConfig) {
+        if (usesConfig && !robot.isAutonomous()) {
             //data = robot.pullNonGamepad(this);
             gamepad = robot.pullControls(this);
 

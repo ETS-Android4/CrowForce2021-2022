@@ -20,18 +20,18 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opM
 //@TeleOp(name = "Arm Controls", group = "robot")
 public class ArmController extends SubSystem {
 
-    public @MainRobot
-    Baguette robot;
-
     Servo elbowJoint;
     Servo clampServo;
 
 
-    public ArmController(Baguette robot, String BIG_S, String CLAMP_S){
-        super(robot);
+    public ArmController(Baguette _robot, String BIG_S, String CLAMP_S){
+        super(_robot);
+        robot = _robot;
         elbowJoint = robot.hardwareMap.servo.get(BIG_S);
         clampServo = robot.hardwareMap.servo.get(CLAMP_S);
     }
+
+    public void dropArm() { elbowJoint.setPosition(0); waitTime(1000); clampServo.setPosition(0); }
 
 
     double armPos = 0.0;
@@ -52,14 +52,14 @@ public class ArmController extends SubSystem {
 
     @Override
     public void handle() {
-        double py = -opMode.gamepad1.left_stick_y;
-        boolean down = opMode.gamepad1.dpad_down;
-        boolean up = opMode.gamepad1.dpad_up;
-        boolean grab = opMode.gamepad1.right_bumper;
-        boolean letGo = opMode.gamepad1.left_bumper;
-        boolean thirdLevel = opMode.gamepad1.triangle;
-        boolean secondLevel = opMode.gamepad1.square;
-        boolean firstLevel = opMode.gamepad1.x;
+        double py = -robot.gamepad1.left_stick_y;
+        boolean down = robot.gamepad1.dpad_down;
+        boolean up = robot.gamepad1.dpad_up;
+        boolean grab = robot.gamepad1.right_bumper;
+        boolean letGo = robot.gamepad1.left_bumper;
+        boolean thirdLevel = robot.gamepad1.triangle;
+        boolean secondLevel = robot.gamepad1.square;
+        boolean firstLevel = robot.gamepad1.x;
 
         armPos = elbowJoint.getPosition();
 
@@ -80,12 +80,15 @@ public class ArmController extends SubSystem {
         }
         else if(up == true)
         {
-            elbowJoint.setPosition(180);
+            robot.telemetry.addData("yeehaw", "servo");
+            robot.telemetry.update();
+
+            elbowJoint.setPosition(1);
         }
 
         if(grab == true)
         {
-            clampServo.setPosition(80);
+            clampServo.setPosition(0.4);
         }
         else if(letGo == true)
         {
@@ -93,15 +96,15 @@ public class ArmController extends SubSystem {
         }
 
         if(firstLevel == true) {
-            elbowJoint.setPosition(30);
+            elbowJoint.setPosition(0.2);
         }
         else if(secondLevel == true)
         {
-            elbowJoint.setPosition(45);
+            elbowJoint.setPosition(0.4);
         }
         else if(thirdLevel == true)
         {
-            elbowJoint.setPosition(60);
+            elbowJoint.setPosition(0.7);
         }
     }
 

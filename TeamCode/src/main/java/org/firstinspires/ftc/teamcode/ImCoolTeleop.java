@@ -5,6 +5,7 @@ import com.SCHSRobotics.HAL9001.system.robot.MainRobot;
 import com.SCHSRobotics.HAL9001.system.robot.Robot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Baguette;
 
 
 @TeleOp(name = "ImCoolTeleop", group = "cool group")
@@ -15,6 +16,7 @@ public class ImCoolTeleop extends BaseTeleop {
 
     @Override
     protected void onInit() {
+        Baguette.isRunningAuto = false;
         //robot.mDrive.reverseMotor("f_l_m");
         //robot.mDrive.reverseMotor("f_r_m");
         //robot.mDrive.reverseMotor("b_l_m");

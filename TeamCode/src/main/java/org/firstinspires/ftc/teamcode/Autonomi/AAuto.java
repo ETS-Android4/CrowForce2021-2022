@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomi;
 
 import com.SCHSRobotics.HAL9001.system.robot.BaseAutonomous;
         import com.SCHSRobotics.HAL9001.system.robot.MainRobot;
@@ -14,7 +14,9 @@ import com.SCHSRobotics.HAL9001.system.robot.BaseAutonomous;
         import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-        //@Autonomous(name = "MyHalAuto", group = "Example Programs")
+import org.firstinspires.ftc.teamcode.Baguette;
+
+//@Autonomous(name = "MyHalAuto", group = "Example Programs")
 public class AAuto extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
