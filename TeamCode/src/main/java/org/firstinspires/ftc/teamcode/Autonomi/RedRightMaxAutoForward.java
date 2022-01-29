@@ -41,11 +41,6 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
         //robot.mDrive.reverseMotor("b_l_m");
         //robot.mDrive.reverseMotor("b_r_m");
         //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
-        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
-
-                lineTo(new Point2D(0,48)).
-                build().toRoadrunner(),
-                CoordinateMode.HAL);
 
         /*HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
                 lineTo(new Point2D(0,0)).
@@ -77,17 +72,41 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
 
 
         //scan
-        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(3)), 0.4);
-        waitTime(1000);
-        robot.mDrive.moveSimple(new Vector2D(Converter.inchToEncoder(19),0), 0.4);
-        waitTime(1000);
+        HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(-30, 20), 0)
+                .build();
+
+        HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, -12), 0)
+                .build();
+
+        HALTrajectory park = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(0, 45))
+                .build();
+
+        robot.mDrive.followTrajectory(setForPlace);
+        waitTime(500);
+       // robot.mDrive.turnPID(Math.PI);
+
+        robot.arm2.dropArm(3);
+        waitTime(500);
+
+        //robot.mDrive.turnPID(Math.PI);
+        robot.mDrive.followTrajectory(alignForPark);
+        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
+        robot.telemetry.update();
+        robot.mDrive.turnPID(3*Math.PI/2);
+        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
+        robot.telemetry.update();
+
+        robot.mDrive.followTrajectory(park);
 
         /*robot.mDrive.turnPower(0.4);
         waitTime(1500);
         robot.mDrive.turnPower(0);
         //robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);*/
 
-        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(1)), 0.4);
+        /*robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(1)), 0.4);
         robot.intake.dropMarker("color");
         robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(4)), 0.4);
         robot.mDrive.turnPower(0.4);
@@ -104,7 +123,7 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
         waitTime(800);
         robot.mDrive.turnPower(0);
         robot.mDrive.movePower(0, 0.7);
-        waitTime(2000);
+        waitTime(2000);*/
 
     }
 }

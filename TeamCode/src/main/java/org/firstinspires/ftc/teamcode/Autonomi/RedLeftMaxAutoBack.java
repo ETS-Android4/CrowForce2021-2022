@@ -20,7 +20,7 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "RedLeftMaxAutoBack", group = "comp")
+@Autonomous(name = "RedLeftMaxAutoBackDepot", group = "comp")
 public class RedLeftMaxAutoBack extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
@@ -37,12 +37,6 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
     @Override
     public void main() {
         robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
-        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
-
-                lineTo(new Point2D(0,48)).
-                build().toRoadrunner(),
-                CoordinateMode.HAL);
-
         /*HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
                 lineTo(new Point2D(0,0)).
                 build().
@@ -74,22 +68,31 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
         //red side
 
         //scan
-        robot.mDrive.moveSimple(new Vector2D(.5, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
-        robot.mDrive.turnPID(-90, HALAngleUnit.DEGREES);
-        robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        HALTrajectory scootForward = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, 4), 0)
+                .build();
 
-        robot.spinner.spinSpinMotorTime();
+        HALTrajectory moveDucks = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, 20), 0)
+                .build();
 
-        robot.mDrive.moveSimple(new Vector2D(-2, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        HALTrajectory parkDepot = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(-12, 96))
+                .build();
 
-        robot.mDrive.turnPID( 90, HALAngleUnit.DEGREES);
+        //robot.mDrive.followTrajectory(scootForward);
+        //waitTime(500);
+        //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
+        // /2
 
-        robot.intake.dropMarker("color");
+        robot.mDrive.followTrajectory(moveDucks);
+        waitTime(500);
 
-        robot.arm.dropArm();
+        robot.mDrive.turnTime(0.3, 700);
+        robot.spinner.spinSpinMotorTime(-0.3, 2000);
+        robot.mDrive.turnPID(3 * Math.PI/2);
 
-        robot.mDrive.turnPID( 90, HALAngleUnit.DEGREES);
-        robot.mDrive.moveSimple(new Vector2D(3, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        //robot.mDrive.followTrajectory(parkDepot);
 
 
     }

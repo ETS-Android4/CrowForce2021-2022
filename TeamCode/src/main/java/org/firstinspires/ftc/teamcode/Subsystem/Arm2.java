@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 public class Arm2 extends SubSystem {
     public CustomizableGamepad gamepad;
@@ -37,7 +38,7 @@ public class Arm2 extends SubSystem {
     public static int elbowState = 0;
     private boolean heldElbowLast = false;
 
-    private Toggle clampToggle = new Toggle(Toggle.ToggleTypes.flipToggle, false);
+    private Toggle clampToggle = new Toggle(Toggle.ToggleTypes.flipToggle, true);
 
     //public ConfigData data;
     //private int framesToSkip = 3;
@@ -57,7 +58,9 @@ public class Arm2 extends SubSystem {
 
     @Override
     public void init() {
-        elbowJoint.setPosition(0.2);
+        elbowJoint.setPosition(0.3);
+        clampServo.setPosition(1);
+
     }
 
     @Override
@@ -67,6 +70,7 @@ public class Arm2 extends SubSystem {
 
     @Override
     public void start() {
+        clampServo.setPosition(1);
         if (usesConfig && !robot.isAutonomous()) {
             //data = robot.pullNonGamepad(this);
             gamepad = robot.pullControls(this);
@@ -100,12 +104,11 @@ public class Arm2 extends SubSystem {
         if (elbowState == 0) {
             elbowJoint.setPosition(0.2);
         }
-        else if (elbowState >= 6) {
-            elbowJoint.setPosition((elbowState * (.1/4) + 0.59));
+        else if (elbowState >= 4) {
+            elbowJoint.setPosition((elbowState * (.1/7) + 0.63));
         }
         else {
-            elbowJoint.setPosition((elbowState * (0.15/7)) + 0.375);
-
+            elbowJoint.setPosition((elbowState * (0.15/7)) + 0.425);
         }
 
         robot.telemetry.addData(" "  + elbowJoint.getPosition(), "elbow");
@@ -131,5 +134,28 @@ public class Arm2 extends SubSystem {
                 new ConfigParam(RAISE_ELBOW_SERVO, Button.BooleanInputs.dpad_right, 2),
                 new ConfigParam(CLAMP_SERVO_BUTTON, Button.BooleanInputs.b, 2)
         };
+    }
+
+    public void dropArm(int level) {
+        switch (level) {
+            default:
+                telemetry.addData("arm case:", "default");
+                break;
+            case 0:
+                elbowJoint.setPosition(0.2); waitTime(1000); clampServo.setPosition(0);
+                break;
+            case 3:
+                elbowJoint.setPosition(0.489); waitTime(1000); clampServo.setPosition(0);
+                break;
+            case 2:
+                elbowJoint.setPosition(0.62); waitTime(1000); clampServo.setPosition(0);
+                break;
+            case 1:
+                elbowJoint.setPosition(0.7); waitTime(1000); clampServo.setPosition(0);
+                break;
+        }
+
+
+        elbowJoint.setPosition(0); waitTime(1000); clampServo.setPosition(0);
     }
 }

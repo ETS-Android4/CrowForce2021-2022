@@ -18,19 +18,15 @@ public class RoadrunnerAuto extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
-
-
     @Override
     public void main() {
-        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
-                lineTo(new Point2D(0,48)).
-                build().toRoadrunner(),
-                CoordinateMode.HAL);
-        HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
-                lineTo(new Point2D(0,0)).
-                build().
-                toRoadrunner(),
-                CoordinateMode.HAL);
+        HALTrajectory forwardRoute = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineTo(new Point2D(24, 24), 0)
+                .build();
+
+        HALTrajectory returnRoute = robot.mDrive.trajectoryBuilder(forwardRoute.end())
+                .splineTo(new Point2D(0, 0), 0)
+                .build();
 
         //robot.mDrive.followTrajectory(forwardRoute);
         //waitTime(1000);
@@ -42,18 +38,8 @@ public class RoadrunnerAuto extends BaseAutonomous {
         //waitTime(1000);
         //robot.mDrive.followTrajectory(returnRoute);
 
-        HALTrajectory rightMarker = new HALTrajectory(robot.mDrive.trajectoryBuilder(returnRoute.end(), 0).
-
-                lineTo(new Point2D(-30,48)).
-                build().
-                toRoadrunner(),
-                CoordinateMode.HAL);
-
         robot.mDrive.followTrajectory(forwardRoute);
         robot.mDrive.followTrajectory(returnRoute);
-        robot.mDrive.followTrajectory(rightMarker);
-
-
-
+        //robot.mDrive.followTrajectory(rightMarker);
     }
 }

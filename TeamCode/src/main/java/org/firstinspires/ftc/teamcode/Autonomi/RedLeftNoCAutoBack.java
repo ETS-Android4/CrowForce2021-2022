@@ -79,7 +79,7 @@ public class RedLeftNoCAutoBack extends BaseAutonomous {
 
         robot.intake.dropMarker("color");
 
-        robot.arm.dropArm();
+        //robot.arm.dropArm();
 
         robot.mDrive.turnPID( 90, HALAngleUnit.DEGREES);
         robot.mDrive.moveSimple(new Vector2D(3, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);

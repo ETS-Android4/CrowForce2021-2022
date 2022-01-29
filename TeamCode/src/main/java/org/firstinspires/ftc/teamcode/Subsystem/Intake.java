@@ -106,8 +106,10 @@ public class Intake extends SubSystem {
                     slidesMotor.setPower(0);
                     isSettingSlide = false;
                 case 3:
+                    robot.telemetry.addData("test", "test");
+                    robot.telemetry.update();
                     slidesMotor.setPower(pow);
-                    waitTime(2200);
+                    waitTime(2600);
                     slidesMotor.setPower(0);
                     drop();
                     waitTime(400);
@@ -179,8 +181,8 @@ public class Intake extends SubSystem {
                 flag = true;
             }
         }
-
-
+        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
+        robot.telemetry.update();
     }
 
     @Override

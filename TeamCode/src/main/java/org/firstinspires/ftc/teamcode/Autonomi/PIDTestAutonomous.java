@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode.Autonomi;
 
+import com.SCHSRobotics.HAL9001.system.config.AutonomousConfig;
+import com.SCHSRobotics.HAL9001.system.config.ConfigData;
+import com.SCHSRobotics.HAL9001.system.config.ConfigParam;
+import com.SCHSRobotics.HAL9001.system.config.TeleopConfig;
 import com.SCHSRobotics.HAL9001.system.robot.BaseAutonomous;
 import com.SCHSRobotics.HAL9001.system.robot.MainRobot;
 import com.SCHSRobotics.HAL9001.system.robot.roadrunner_util.CoordinateMode;
 import com.SCHSRobotics.HAL9001.system.robot.roadrunner_util.HALTrajectory;
+import com.SCHSRobotics.HAL9001.util.control.Button;
 import com.SCHSRobotics.HAL9001.util.math.geometry.Point2D;
 import com.SCHSRobotics.HAL9001.util.math.geometry.Vector2D;
 import com.SCHSRobotics.HAL9001.util.math.units.HALAngleUnit;
@@ -24,19 +29,32 @@ public class PIDTestAutonomous extends BaseAutonomous {
     //WeirdSpinnerHalWorkaround weird = new WeirdSpinnerHalWorkaround();
 
 
+
     @Override
     public void main() {
-        robot.mDrive.getLocalizer().setPoseEstimate(new Pose2d(0,0,0));
 
-        robot.mDrive.turnPID(Math.PI/2);
+
+        //robot.mDrive.setTurnPID();
+
+        //robot.mDrive.getLocalizer().setPoseEstimate(new Pose2d(0,0,0));
+
+        robot.mDrive.turnPID(Math.PI/2, Math.PI/45);
+        telemetry.addData(robot.mDrive.getLocalizer().getPoseEstimate().toString(), "imu");
         telemetry.addData("flag:", "1");
         telemetry.update();
         waitTime(1000);
-        robot.mDrive.turnPID(270, HALAngleUnit.DEGREES);
+        robot.mDrive.turnPID(PI/4);
+        telemetry.addData(robot.mDrive.getLocalizer().getPoseEstimate().toString(), "imu");
+        telemetry.addData("flag:", "2");
+        telemetry.update();
         waitTime(1000);
-        robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);
+        robot.mDrive.turnPID(3*PI/4);
+        telemetry.addData(robot.mDrive.getLocalizer().getPoseEstimate().toString(), "imu");
+        telemetry.addData("flag:", "3");
+        telemetry.update();
         waitTime(1000);
 
 
     }
+
 }

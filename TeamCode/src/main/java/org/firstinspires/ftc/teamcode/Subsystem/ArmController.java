@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Baguette;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 //@TeleOp(name = "Arm Controls", group = "robot")
 public class ArmController extends SubSystem {
@@ -31,13 +32,11 @@ public class ArmController extends SubSystem {
         clampServo = robot.hardwareMap.servo.get(CLAMP_S);
     }
 
-    public void dropArm() { elbowJoint.setPosition(0); waitTime(1000); clampServo.setPosition(0); }
-
-
     double armPos = 0.0;
 
     @Override
     public void init() {
+        clampServo.setPosition(0.4);
     }
 
     @Override

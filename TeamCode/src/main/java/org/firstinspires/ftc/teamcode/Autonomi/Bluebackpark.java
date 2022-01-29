@@ -77,9 +77,9 @@ public class Bluebackpark extends BaseAutonomous {
 
 
         //scan
-        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(8)), 0.4);
+        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(24)), 0.4);
         waitTime(1000);
-        robot.mDrive.moveSimple(new Vector2D(-Converter.inchToEncoder(19),0), 0.4);
+        robot.mDrive.moveSimple(new Vector2D(-Converter.inchToEncoder(24),0), 0.4);
         waitTime(1000);
 
         /*robot.mDrive.turnPower(0.4);

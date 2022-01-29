@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.VisionStuff;
 import com.SCHSRobotics.HAL9001.system.robot.Camera;
 
 //import org.opencv.android.OpenCVLoader;
+import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.MatOfPoint;
@@ -20,24 +21,33 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Mat;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvPipeline;
-
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Vision extends SubSystem {
+
     OpenCvCamera camera;
     public Vision(Robot robot) {
         super(robot);
-        //OpenCVLoader.initDebug();
-        int cameraMonitorViewId = robot.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", robot.hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(robot.hardwareMap.get(WebcamName.class, "Cam"), cameraMonitorViewId);
-        camera.setPipeline(new TestPipeline());
+
 
 
     }
 
     @Override
     public void init() {
+        //OpenCVLoader.initDebug();
+        int cameraMonitorViewId = robot.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", robot.hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(robot.hardwareMap.get(WebcamName.class, "Cam"), cameraMonitorViewId);
+        camera.setPipeline(new TestPipeline());
         camera.openCameraDeviceAsync(() -> camera.startStreaming((int)1080, (int)720));
     }
 

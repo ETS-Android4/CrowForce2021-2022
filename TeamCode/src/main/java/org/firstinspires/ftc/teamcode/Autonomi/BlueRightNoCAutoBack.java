@@ -71,18 +71,21 @@ public class BlueRightNoCAutoBack extends BaseAutonomous {
         //robot.mDrive.followTrajectory(rightMarker);
 
 
-        //red side
+        //blue side
 
-        //scan
-        robot.mDrive.moveSimple(new Vector2D(.5, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
-        robot.mDrive.moveSimple(new Vector2D(1, -90, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        HALTrajectory scootForward = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, 4), 0)
+                .build();
 
-        robot.intake.dropMarker("color");
+        HALTrajectory parkDepot = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(96, 12))
+                .build();
 
-        robot.arm.dropArm();
+        robot.mDrive.followTrajectory(scootForward);
+        waitTime(500);
+        robot.mDrive.turnPID(3 * Math.PI/2);
 
-        robot.mDrive.turnPID(90, HALAngleUnit.DEGREES);
-        robot.mDrive.moveSimple(new Vector2D(3, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        robot.mDrive.followTrajectory(parkDepot);
 
 
     }

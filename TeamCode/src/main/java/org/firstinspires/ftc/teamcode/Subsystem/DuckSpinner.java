@@ -23,11 +23,14 @@ public class DuckSpinner extends SubSystem {
     //public Baguette robot;
 
     public static DcMotor spinMotor;
-    public static boolean isSpinMotorButtonHeld;
+    public static boolean isSpinAMotorButtonHeld;
+    public static boolean isSpinBMotorButtonHeld;
 
-    public static final String SPIN_MOTOR_BUTTON = "SPIN_MOTOR_BUTTON_Yeehaw";
+    public static final String SPINA_MOTOR_BUTTON = "SPIN_A_MOTOR_BUTTON_Yeehaw";
+    public static final String SPINB_MOTOR_BUTTON = "SPIN_B_MOTOR_BUTTON_Yeehaw";
 
-    //public ConfigData data;
+    public static final String SPIN_SPEEED = "SPIN_SPEED";
+    public ConfigData data;
     //private int framesToSkip = 3;
     public DuckSpinner(@NotNull Baguette _robot, String _SPIN_MOTOR_CONFIG) {
         super(_robot);
@@ -70,22 +73,29 @@ public class DuckSpinner extends SubSystem {
     @Override
     public void start() {
         if (usesConfig && !robot.isAutonomous()) {
-            //data = robot.pullNonGamepad(this);
+            data = robot.pullNonGamepad(this);
             gamepad = robot.pullControls(this);
 
 
-            //isSpinMotorButtonHeld = data.getData(SPIN_MOTOR_BUTTON, Boolean.class);
+            //isSpinMotorButtonHeld = data.getData(SPIN_MOTOR_BUTTON, Boo\ean.class);
         }
     }
 
     @Override
     public void handle() {
 
-        isSpinMotorButtonHeld = gamepad.getInput(SPIN_MOTOR_BUTTON);
+        isSpinAMotorButtonHeld = gamepad.getInput(SPINA_MOTOR_BUTTON);
+        isSpinBMotorButtonHeld = gamepad.getInput(SPINB_MOTOR_BUTTON);
 
         //isSpinMotorButtonHeld = gamepad1.a;
         spinMotor.setPower(0);
-        if (isSpinMotorButtonHeld) spinMotor.setPower(.25);
+
+        double power = 0.0;
+
+        if (isSpinAMotorButtonHeld) power += data.getData(SPIN_SPEEED, Double.class);
+        if (isSpinBMotorButtonHeld) power -= data.getData(SPIN_SPEEED, Double.class);
+
+        spinMotor.setPower(power);
     }
 
     @Override
@@ -96,7 +106,9 @@ public class DuckSpinner extends SubSystem {
     @TeleopConfig
     public static ConfigParam[] teleopConfig() {
         return new ConfigParam[] {
-                new ConfigParam(SPIN_MOTOR_BUTTON, Button.BooleanInputs.a, 2)
+                new ConfigParam(SPINA_MOTOR_BUTTON, Button.BooleanInputs.a, 2),
+                new ConfigParam(SPINB_MOTOR_BUTTON, Button.BooleanInputs.x, 2),
+                new ConfigParam(SPIN_SPEEED, ConfigParam.numberMap(0, 1, 0.025), 0.25),
         };
     }
 }

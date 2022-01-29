@@ -26,7 +26,7 @@ public class Testautonomosu extends BaseAutonomous {
     Baguette robot;
 
     private void drivePower (double pow, int angleDegrees) {
-        //write code that uses the imu to see how far it goes, and add that to the parameters so its based off distance
+        //hat uses the imu to see how far it goes, and add that to the parameters so its based off distance
         //robot.mDrive.movePower(new Vector2D(pow, angleDegrees, HALAngleUnit.DEGREES));
     }
 
@@ -42,7 +42,6 @@ public class Testautonomosu extends BaseAutonomous {
         //robot.mDrive.reverseMotor("b_r_m");
         //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
         HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
-
                 lineTo(new Point2D(0,48)).
                 build().toRoadrunner(),
                 CoordinateMode.HAL);

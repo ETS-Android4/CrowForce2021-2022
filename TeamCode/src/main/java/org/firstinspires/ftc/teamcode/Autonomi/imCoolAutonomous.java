@@ -81,7 +81,7 @@ public class imCoolAutonomous extends BaseAutonomous {
         robot.mDrive.moveSimple(new Vector2D(-2, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
         robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
 
-        robot.arm.dropArm();
+       // robot.arm.dropArm();
 
         robot.mDrive.turnSimple(0.5, -90, HALAngleUnit.DEGREES);
         robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
@@ -104,7 +104,7 @@ public class imCoolAutonomous extends BaseAutonomous {
         robot.mDrive.moveSimple(new Vector2D(-2, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
         robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
 
-        robot.arm.dropArm();
+        //robot.arm.dropArm();
 
         robot.mDrive.turnSimple(0.5, 90, HALAngleUnit.DEGREES);
         robot.mDrive.moveSimple(new Vector2D(1, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
