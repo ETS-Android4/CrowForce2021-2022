@@ -142,20 +142,18 @@ public class Arm2 extends SubSystem {
                 telemetry.addData("arm case:", "default");
                 break;
             case 0:
-                elbowJoint.setPosition(0.2); waitTime(1000); clampServo.setPosition(0);
+                elbowJoint.setPosition(0.2); waitTime(1000);
                 break;
             case 3:
-                elbowJoint.setPosition(0.489); waitTime(1000); clampServo.setPosition(0);
+                elbowJoint.setPosition(0.55); waitTime(1000);
                 break;
             case 2:
-                elbowJoint.setPosition(0.62); waitTime(1000); clampServo.setPosition(0);
+                elbowJoint.setPosition(0.62); waitTime(1000);
                 break;
             case 1:
-                elbowJoint.setPosition(0.7); waitTime(1000); clampServo.setPosition(0);
+                elbowJoint.setPosition(0.7); waitTime(1000);
                 break;
         }
-
-
-        elbowJoint.setPosition(0); waitTime(1000); clampServo.setPosition(0);
+        clampServo.setPosition(0.5); clampServo.setPosition(1); elbowJoint.setPosition(0.3);
     }
 }

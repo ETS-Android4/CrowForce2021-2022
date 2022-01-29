@@ -68,16 +68,16 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
         //red side
 
         //scan
-        HALTrajectory scootForward = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, 4), 0)
+        HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(52, 24), 0)
                 .build();
 
-        HALTrajectory moveDucks = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, 20), 0)
+        HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, -12), 0)
                 .build();
 
-        HALTrajectory parkDepot = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(-12, 96))
+        HALTrajectory ducks = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(-109, 0))
                 .build();
 
         //robot.mDrive.followTrajectory(scootForward);
@@ -85,12 +85,21 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
         //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
         // /2
 
-        robot.mDrive.followTrajectory(moveDucks);
+        robot.mDrive.followTrajectory(setForPlace);
+        waitTime(500);
+        // robot.mDrive.turnPID(Math.PI);
+
+        robot.arm2.dropArm(3);
         waitTime(500);
 
-        robot.mDrive.turnTime(0.3, 700);
-        robot.spinner.spinSpinMotorTime(-0.3, 2000);
-        robot.mDrive.turnPID(3 * Math.PI/2);
+        robot.mDrive.followTrajectory(alignForPark);
+        waitTime(500);
+
+        robot.mDrive.followTrajectory(ducks);
+        waitTime(500);
+
+        robot.mDrive.turnTime(0.25, 5000);
+        robot.spinner.spinSpinMotorTime(0.35, 500);
 
         //robot.mDrive.followTrajectory(parkDepot);
 

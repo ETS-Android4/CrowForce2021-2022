@@ -74,15 +74,37 @@ public class RedLeftNoCAutoBack extends BaseAutonomous {
         //red side
 
         //scan
-        robot.mDrive.moveSimple(new Vector2D(.5, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
-        robot.mDrive.moveSimple(new Vector2D(1, 90, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(52, 24), 0)
+                .build();
 
-        robot.intake.dropMarker("color");
+        HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, -12), 0)
+                .build();
 
-        //robot.arm.dropArm();
+        HALTrajectory parkPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(-109, 14))
+                .build();
 
-        robot.mDrive.turnPID( 90, HALAngleUnit.DEGREES);
-        robot.mDrive.moveSimple(new Vector2D(3, 0, HALAngleUnit.DEGREES), HALDistanceUnit.TILES, 0.4);
+        //robot.mDrive.followTrajectory(scootForward);
+        //waitTime(500);
+        //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
+        // /2
+
+        robot.mDrive.followTrajectory(setForPlace);
+        waitTime(500);
+        // robot.mDrive.turnPID(Math.PI);
+
+        robot.arm2.dropArm(3);
+        waitTime(500);
+
+        robot.mDrive.followTrajectory(alignForPark);
+        waitTime(500);
+
+        robot.mDrive.followTrajectory(parkPlace);
+        waitTime(500);
+
+        //robot.mDrive.followTrajectory(parkDepot);
 
 
     }

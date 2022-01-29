@@ -73,15 +73,15 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
 
         //scan
         HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(-30, 20), 0)
+                .splineToConstantHeading(new Point2D(-30, 20.5), 0)
                 .build();
 
         HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, -12), 0)
+                .splineToConstantHeading(new Point2D(0, -14), 0)
                 .build();
 
         HALTrajectory park = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(0, 45))
+                .lineTo(new Point2D(0, 55))
                 .build();
 
         robot.mDrive.followTrajectory(setForPlace);
@@ -95,7 +95,7 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
         robot.mDrive.followTrajectory(alignForPark);
         robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
         robot.telemetry.update();
-        robot.mDrive.turnPID(3*Math.PI/2);
+        robot.mDrive.turnTime(0.5, 1800);
         robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
         robot.telemetry.update();
 
