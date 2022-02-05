@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "RedRightMaxAutoForward", group = "comp")
-public class RedRightMaxAutoForward extends BaseAutonomous {
+@Autonomous(name = "BBPark", group = "comp")
+public class BBPark extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -36,11 +36,12 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
 
     @Override
     public void main() {
-        //robot.mDrive.reverseMotor("f_l_m");
-        //robot.mDrive.reverseMotor("f_r_m");
-        //robot.mDrive.reverseMotor("b_l_m");
-        //robot.mDrive.reverseMotor("b_r_m");
-        //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
+        robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
+        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
+
+                lineTo(new Point2D(0,48)).
+                build().toRoadrunner(),
+                CoordinateMode.HAL);
 
         /*HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
                 lineTo(new Point2D(0,0)).
@@ -72,58 +73,19 @@ public class RedRightMaxAutoForward extends BaseAutonomous {
 
 
         //scan
-        HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(-30, 20.5), 0)
-                .build();
-
-        HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, -14), 0)
-                .build();
-
         HALTrajectory park = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(0, 55))
+                .splineToConstantHeading(new Point2D(-56, 22), 0)
                 .build();
 
-        robot.mDrive.followTrajectory(setForPlace);
-        waitTime(500);
-       // robot.mDrive.turnPID(Math.PI);
 
-        robot.arm2.dropArm(3);
-        waitTime(500);
-
-        //robot.mDrive.turnPID(Math.PI);
-        robot.mDrive.followTrajectory(alignForPark);
-        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
-        robot.telemetry.update();
-        robot.mDrive.turnTime(0.5, 1800);
-        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
-        robot.telemetry.update();
+        //robot.mDrive.followTrajectory(scootForward);
+        //waitTime(500);
+        //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
+        // /2
 
         robot.mDrive.followTrajectory(park);
+        waitTime(500);
 
-        /*robot.mDrive.turnPower(0.4);
-        waitTime(1500);
-        robot.mDrive.turnPower(0);
-        //robot.mDrive.turnPID(180, HALAngleUnit.DEGREES);*/
-
-        /*robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(1)), 0.4);
-        robot.intake.dropMarker("color");
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(4)), 0.4);
-        robot.mDrive.turnPower(0.4);
-        waitTime(700);
-        robot.mDrive.turnPower(0);
-
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(8)), 0.4);
-        //robot.mDrive.turnPID(0, HALAngleUnit.DEGREES);
-        robot.mDrive.turnPower(0.4);
-        waitTime(880);
-        robot.mDrive.turnPower(0);
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(5)), 0.4);
-        robot.mDrive.turnPower(-0.4);
-        waitTime(800);
-        robot.mDrive.turnPower(0);
-        robot.mDrive.movePower(0, 0.7);
-        waitTime(2000);*/
 
     }
 }

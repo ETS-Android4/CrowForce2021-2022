@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "BlueRightNoCAutoBack", group = "comp")
-public class BlueRightNoCAutoBack extends BaseAutonomous {
+@Autonomous(name = "RBPark", group = "comp")
+public class RBPark extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -71,21 +71,20 @@ public class BlueRightNoCAutoBack extends BaseAutonomous {
         //robot.mDrive.followTrajectory(rightMarker);
 
 
-        //blue side
 
-        HALTrajectory scootForward = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, 4), 0)
+        //scan
+        HALTrajectory park = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(56, 22), 0)
                 .build();
 
-        HALTrajectory parkDepot = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(96, 12))
-                .build();
 
-        robot.mDrive.followTrajectory(scootForward);
+        //robot.mDrive.followTrajectory(scootForward);
+        //waitTime(500);
+        //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
+        // /2
+
+        robot.mDrive.followTrajectory(park);
         waitTime(500);
-        robot.mDrive.turnPID(3 * Math.PI/2);
-
-        robot.mDrive.followTrajectory(parkDepot);
 
 
     }

@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "BlueCarasolPark", group = "comp")
-public class BlueCarasolPark extends BaseAutonomous {
+@Autonomous(name = "BlueNoC", group = "comp")
+public class BlueNoC extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -36,11 +36,7 @@ public class BlueCarasolPark extends BaseAutonomous {
 
     @Override
     public void main() {
-        //robot.mDrive.reverseMotor("f_l_m");
-        //robot.mDrive.reverseMotor("f_r_m");
-        //robot.mDrive.reverseMotor("b_l_m");
-        //robot.mDrive.reverseMotor("b_r_m");
-        //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
+        robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
         HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
 
                 lineTo(new Point2D(0,48)).
@@ -75,14 +71,44 @@ public class BlueCarasolPark extends BaseAutonomous {
         //robot.mDrive.followTrajectory(rightMarker);
 
 
-
         //scan
-        robot.mDrive.moveSimple(new Vector2D(0, Converter.inchToEncoder(12)), 0.4);
-        robot.spinner.spinSpinMotorTime();
-        robot.mDrive.moveSimple(new Vector2D(-Converter.inchToEncoder(19),0), 0.4);
-        waitTime(1000);
-        robot.mDrive.movePower(new Vector2D(0, 0.4));
-        waitTime(1000);
+        HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(-28, 24), 0)
+                .build();
+
+        HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, -12), 0)
+                .build();
+
+        HALTrajectory parkPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(96, 26))
+                .build();
+
+        HALTrajectory parking = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(30, 0))
+                .build();
+
+
+        //robot.mDrive.followTrajectory(scootForward);
+        //waitTime(500);
+        //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
+        // /2
+
+        robot.mDrive.followTrajectory(setForPlace);
+        waitTime(500);
+        // robot.mDrive.turnPID(Math.PI);
+
+        robot.arm2.dropArm(3);
+        waitTime(500);
+
+        robot.mDrive.followTrajectory(alignForPark);
+        waitTime(500);
+
+        robot.mDrive.followTrajectory(parkPlace);
+        waitTime(500);
+
+        robot.mDrive.turnTime(0.5, 200);
+
 
     }
 }

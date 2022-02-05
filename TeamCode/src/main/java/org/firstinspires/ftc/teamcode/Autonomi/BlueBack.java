@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "BlueRightMaxAutoBack", group = "comp")
-public class BlueRightMaxAutoBack extends BaseAutonomous {
+@Autonomous(name = "BlueBack", group = "comp")
+public class BlueBack extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -73,36 +73,45 @@ public class BlueRightMaxAutoBack extends BaseAutonomous {
 
 
         //scan
-        HALTrajectory scootForward = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, 4), 0)
+        HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(-28, 22), 0)
                 .build();
 
-        HALTrajectory moveDucks = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, 6), 0)
+        HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, -12), 0)
                 .build();
 
-        HALTrajectory parkDepot = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(96, 12))
+        HALTrajectory ducks = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(104, 5))
                 .build();
 
-        robot.mDrive.followTrajectory(scootForward);
+        HALTrajectory parkPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(0, 35))
+                .build();
+
+        //robot.mDrive.followTrajectory(scootForward);
+        //waitTime(500);
+        //robot.mDrive.turnPID(-Math.PI/2); //or -3 pi
+        // /2
+
+        robot.mDrive.followTrajectory(setForPlace);
         waitTime(500);
-        robot.mDrive.turnPID(Math.PI/2);
+        // robot.mDrive.turnPID(Math.PI);
 
-        robot.mDrive.followTrajectory(moveDucks);
+        robot.arm2.dropArm(3);
         waitTime(500);
 
-        robot.mDrive.turnTime(0.5, 500);
-        robot.mDrive.turnPID(-Math.PI/2); //or 3 pi / 2
+        robot.mDrive.followTrajectory(alignForPark);
+        waitTime(500);
 
-        robot.mDrive.followTrajectory(parkDepot);
+        robot.mDrive.followTrajectory(ducks);
+        waitTime(500);
 
-        //robot.mDrive.followTrajectory(parkDepot);
+        robot.mDrive.turnTime(-0.25, 700);
+        robot.spinner.spinSpinMotorTime(0.35, 4000);
 
-
-
-
-
+        robot.mDrive.turnTime(0.5, 300);
+        robot.mDrive.followTrajectory(parkPlace);
 
     }
 }

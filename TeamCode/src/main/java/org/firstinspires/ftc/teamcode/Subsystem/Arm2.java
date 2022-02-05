@@ -58,7 +58,7 @@ public class Arm2 extends SubSystem {
 
     @Override
     public void init() {
-        elbowJoint.setPosition(0.3);
+        elbowJoint.setPosition(0.25);
         clampServo.setPosition(1);
 
     }
@@ -154,6 +154,6 @@ public class Arm2 extends SubSystem {
                 elbowJoint.setPosition(0.7); waitTime(1000);
                 break;
         }
-        clampServo.setPosition(0.5); clampServo.setPosition(1); elbowJoint.setPosition(0.3);
+        clampServo.setPosition(0.5); waitTime(1000); clampServo.setPosition(1); elbowJoint.setPosition(0.3);
     }
 }

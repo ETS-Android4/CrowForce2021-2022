@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "RedLeftMaxAutoBackDepot", group = "comp")
-public class RedLeftMaxAutoBack extends BaseAutonomous {
+@Autonomous(name = "RedBack", group = "comp")
+public class RedBack extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -69,7 +69,7 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
 
         //scan
         HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(52, 24), 0)
+                .splineToConstantHeading(new Point2D(37, 22.5), 0)
                 .build();
 
         HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
@@ -77,7 +77,11 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
                 .build();
 
         HALTrajectory ducks = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(-109, 0))
+                .lineTo(new Point2D(-71, -3))
+                .build();
+
+        HALTrajectory parkPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .lineTo(new Point2D(5, -16))
                 .build();
 
         //robot.mDrive.followTrajectory(scootForward);
@@ -98,8 +102,13 @@ public class RedLeftMaxAutoBack extends BaseAutonomous {
         robot.mDrive.followTrajectory(ducks);
         waitTime(500);
 
-        robot.mDrive.turnTime(0.25, 5000);
-        robot.spinner.spinSpinMotorTime(0.35, 500);
+        robot.mDrive.turnTime(0.25, 3000);
+        robot.mDrive.moveTime(new Vector2D(0, .25), 200);
+        robot.spinner.spinSpinMotorTime(-0.25, 4000);
+
+        robot.mDrive.turnTime(0.25, 150);
+        robot.mDrive.followTrajectory(parkPlace);
+
 
         //robot.mDrive.followTrajectory(parkDepot);
 

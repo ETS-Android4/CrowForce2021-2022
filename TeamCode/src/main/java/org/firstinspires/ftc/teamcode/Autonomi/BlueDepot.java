@@ -20,8 +20,8 @@ import Util.Converter;
 
 import static java.lang.Math.PI;
 
-@Autonomous(name = "BlueLeftMaxAutoForward", group = "comp")
-public class BlueLeftMaxAutoForward extends BaseAutonomous {
+@Autonomous(name = "BlueDepot", group = "comp")
+public class BlueDepot extends BaseAutonomous {
     public @MainRobot
     Baguette robot;
 
@@ -42,30 +42,40 @@ public class BlueLeftMaxAutoForward extends BaseAutonomous {
         //robot.mDrive.reverseMotor("b_r_m");
         //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
 
+        //scan
         HALTrajectory setForPlace = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(22, 12), 0)
+                .splineToConstantHeading(new Point2D(40, 21), 0)
                 .build();
 
         HALTrajectory alignForPark = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Point2D(0, -6), 0)
+                .splineToConstantHeading(new Point2D(0, -11), 0)
                 .build();
 
         HALTrajectory park = robot.mDrive.trajectoryBuilder(new Pose2d())
-                .lineTo(new Point2D(0, 45))
+                .lineTo(new Point2D(0, 82))
                 .build();
 
+        waitTime(7000);
         robot.mDrive.followTrajectory(setForPlace);
         waitTime(500);
-        robot.mDrive.turnPID(Math.PI);
+        // robot.mDrive.turnPID(Math.PI);
 
-        robot.intake.setSlides(3);
+        robot.arm2.dropArm(3);
         waitTime(500);
 
-        robot.mDrive.turnPID(Math.PI);
+        //robot.mDrive.turnPID(Math.PI);
         robot.mDrive.followTrajectory(alignForPark);
-        robot.mDrive.turnPID(Math.PI/2);
+        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
+        robot.telemetry.update();
+        robot.mDrive.turnTime(0.5, 550);
+        robot.telemetry.addData(robot.mDrive.getPoseEstimate().toString(), "imu");
+        robot.telemetry.update();
 
+        robot.intake.setPower();
         robot.mDrive.followTrajectory(park);
+
+        robot.intake.slidesPowerTime(0, 100);
+
 
         /*HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
                 lineTo(new Point2D(0,0)).

@@ -41,11 +41,13 @@ public class Forwardpark extends BaseAutonomous {
         //robot.mDrive.reverseMotor("b_l_m");
         //robot.mDrive.reverseMotor("b_r_m");
         //robot.mDrive.setAllMotorZeroPowerBehaviors(DcMotor.ZeroPowerBehavior.FLOAT);
-        HALTrajectory forwardRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(new Pose2d(0,0, 0), HALDistanceUnit.INCHES, HALAngleUnit.DEGREES).
+        HALTrajectory first = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(25, 0), 0)
+                .build();
 
-                lineTo(new Point2D(0,48)).
-                build().toRoadrunner(),
-                CoordinateMode.HAL);
+        HALTrajectory park = robot.mDrive.trajectoryBuilder(new Pose2d())
+                .splineToConstantHeading(new Point2D(0, 80), 0)
+                .build();
 
         /*HALTrajectory returnRoute = new HALTrajectory(robot.mDrive.trajectoryBuilder(forwardRoute.end(), 0).
                 lineTo(new Point2D(0,0)).
@@ -76,8 +78,10 @@ public class Forwardpark extends BaseAutonomous {
 
 
 
+        robot.mDrive.followTrajectory(first);
+        waitTime(1000);
         //scan
-        robot.mDrive.moveSimple(new Vector2D(0, -Converter.inchToEncoder(12)), 0.4);
+        robot.mDrive.followTrajectory(park);
         waitTime(1000);
 
 

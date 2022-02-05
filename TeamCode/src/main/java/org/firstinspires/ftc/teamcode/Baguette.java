@@ -38,7 +38,7 @@ public class Baguette extends Robot {
     //@InternalCamera(resWidth = 320, resHeight = 240, usesViewport = true)
     //@ExternalCamera(resWidth = 320, resHeight = 240, configName = "Cam", usesViewport = false, uniqueId = "cam")
     //public OpenCvCamera camera = getCamera("cam");
-    static {OpenCVLoader.initDebug();}
+   // static {OpenCVLoader.initDebug();}
 
 
     public MecanumDrive mDrive;
@@ -47,7 +47,7 @@ public class Baguette extends Robot {
     public Arm2 arm2;
     public Intake intake;
     public PIDTuner pidTuner;
-    public Vision vision;
+    //public Vision vision;
     public static boolean isRunningAuto = true;
     //@ExternalCamera(resHeight = 720, resWidth = 1080, configName = "Cam", uniqueId = "cam", usesViewport = true)
     //public OpenCvCamera camera = getCamera("cam");

@@ -52,8 +52,8 @@ public class DuckSpinner extends SubSystem {
     }
 
     public void spinSpinMotorTime() {
-        spinMotor.setPower(0.5);
-        waitTime(1000);
+        spinMotor.setPower(0.325);
+        waitTime(2500);
         spinMotor.setPower(0);
     }
 

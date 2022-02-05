@@ -74,10 +74,18 @@ public class Intake extends SubSystem {
                 break;
         }
     }
+    public void setPower() {
+        slidesMotor.setPower(0.75);
+    }
     public void drop() {
         dropperServo.setPower(-.2);
         waitTime(750);
         dropperServo.setPower(-1);
+    }
+
+    public void slidesPowerTime (int direction, int timeMillis){
+        slidesMotor.setPower(direction * 0.6);
+        waitTime(timeMillis);
     }
 
     public void setSlides(int level) {
